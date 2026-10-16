@@ -1,0 +1,15 @@
+{
+  "name": "stdblox-react-react-18",
+  "version": "0.0.0",
+  "private": true,
+  "description": "React 18 test environment: the React-sensitive packages that the unit-react18 Vitest project resolves instead of the root ones",
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.8",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

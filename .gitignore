@@ -1,0 +1,53 @@
+# Node/TypeScript
+node_modules/
+dist/
+yarn.lock
+npm-debug.log*
+*.tsbuildinfo
+
+# Build output
+/build/
+
+# IDE/editor
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*.bak
+.DS_Store
+
+# Misc
+.env
+.env.*
+
+# Other
+*.log
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# OS garbage
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*:Zone.Identifier
+.DS_Store
+
+# Explicitly omitted files
+*.gitignore.*
+*.gitignore/
+*.debug.test.ts

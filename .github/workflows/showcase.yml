@@ -1,0 +1,61 @@
+name: Showcase
+
+# Deploys the showcase only once CI has passed on a push to master, or when run on demand
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment at a time, never cancelling one in progress
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build
+    # Only after a successful CI run of a push (not of a pull request whose head branch is named master), or on demand
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-latest
+    steps:
+      # The commit CI tested, rather than the latest one on master, which a workflow_run runs in the context of
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            react-versions/*/package-lock.json
+
+      - run: npm ci
+
+      - run: npm run showcase:build
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: showcase/dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
